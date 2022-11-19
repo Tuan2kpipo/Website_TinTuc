@@ -3,12 +3,13 @@ import { InputForm, Button } from "../../components";
 import { useLocation, useNavigate } from "react-router-dom";
 import * as actions from "../../store/actions";
 import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
 
 function Login() {
   const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn, msg, update } = useSelector((state) => state.auth);
   const [isRegister, setIsRegister] = useState(location.state?.flag);
   const [invalidFields, setInvalidFields] = useState([]);
   const [payload, setPayload] = useState({
@@ -17,17 +18,20 @@ function Login() {
     name: "",
   });
 
+  // chuyen trang thai dang nhap, dang ki
   useEffect(() => {
     setIsRegister(location.state?.flag);
   }, [location.state?.flag]);
 
+  // khi login thanh cong
   useEffect(() => {
     isLoggedIn && navigate("/");
   }, [isLoggedIn]);
 
-  // useEffect(() => {
-  //   msg && Swal.fire("Oops !", msg, "error");
-  // }, [msg, update]);
+  // thong baos loi khi dang nhap popup
+  useEffect(() => {
+    msg && Swal.fire("Oops !", msg, "error");
+  }, [msg, update]);
 
   // ham dang ki hoac dang nhap
   const handleSubmit = async () => {
@@ -106,7 +110,7 @@ function Login() {
             label={"HỌ TÊN"}
             value={payload.name}
             setValue={setPayload}
-            type={"name"}
+            keyPayload={"name"}
           ></InputForm>
         )}
 
@@ -116,7 +120,7 @@ function Login() {
           label={"SỐ ĐIỆN THOẠI"}
           value={payload.phone}
           setValue={setPayload}
-          type={"phone"}
+          keyPayload={"phone"}
         ></InputForm>
         <InputForm
           setInvalidFields={setInvalidFields}
@@ -124,7 +128,8 @@ function Login() {
           label={"MẬT KHÂU"}
           value={payload.password}
           setValue={setPayload}
-          type={"password"}
+          keyPayload={"password"}
+          type="password"
         ></InputForm>
 
         <Button

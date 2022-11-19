@@ -15,9 +15,9 @@ module.exports = (sequelize, DataTypes) => {
     {
       code: DataTypes.STRING,
       value: DataTypes.STRING,
-      //   header: DataTypes.STRING,
-      //   subheader: DataTypes.STRING,
-      subtitle: DataTypes.STRING,
+      header: DataTypes.STRING,
+      subheader: DataTypes.STRING,
+      // subtitle: DataTypes.STRING,
     },
     {
       sequelize,

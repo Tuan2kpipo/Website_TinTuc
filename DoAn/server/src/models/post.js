@@ -35,18 +35,18 @@ module.exports = (sequelize, DataTypes) => {
       attributesId: DataTypes.STRING,
       //the loai
       categoryCode: DataTypes.STRING,
-      //gia
-      priceCode: DataTypes.STRING,
-      areaCode: DataTypes.STRING,
-      // dia ban
-      provinceCode: DataTypes.STRING,
       // mo ta
       description: DataTypes.TEXT,
       userId: DataTypes.STRING,
       overviewId: DataTypes.STRING,
       imagesId: DataTypes.STRING,
-      priceNumber: DataTypes.FLOAT,
-      areaNumber: DataTypes.FLOAT,
+      // //gia
+      // priceCode: DataTypes.STRING,
+      // areaCode: DataTypes.STRING,
+      // // dia ban
+      // provinceCode: DataTypes.STRING,
+      // priceNumber: DataTypes.FLOAT,
+      // areaNumber: DataTypes.FLOAT,
     },
     {
       sequelize,
