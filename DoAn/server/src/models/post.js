@@ -40,9 +40,9 @@ module.exports = (sequelize, DataTypes) => {
       userId: DataTypes.STRING,
       overviewId: DataTypes.STRING,
       imagesId: DataTypes.STRING,
-      // //gia
-      // priceCode: DataTypes.STRING,
-      // areaCode: DataTypes.STRING,
+      //gia
+      priceCode: DataTypes.STRING,
+      areaCode: DataTypes.STRING,
       // // dia ban
       // provinceCode: DataTypes.STRING,
       // priceNumber: DataTypes.FLOAT,

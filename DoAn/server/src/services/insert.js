@@ -2,14 +2,18 @@ import db from "../models";
 import bcrypt from "bcryptjs";
 import { v4 } from "uuid";
 
-import chothuecanho from "../../data/chothuecanho.json";
+// import chothuecanho from "../../data/chothuecanho.json";
 // import chothuematbang from "../../data/chothuematbang.json";
 // import nhachothue from "../../data/nhachothue.json";
-// import chothuephongtro from "../../data/chothuephongtro.json";
+import chothuephongtro from "../../data/chothuephongtro.json";
 import generateCode from "../untils/generateCode";
+import { dataPrice, dataArea } from "../untils/data";
+import { getNumberFromString } from "../untils/common";
 
 require("dotenv").config();
-const dataBody = chothuecanho.body;
+const dataBody = chothuephongtro.body;
+
+// const prices =
 
 const hashPassword = (password) =>
   bcrypt.hashSync(password, bcrypt.genSaltSync(12));
@@ -27,6 +31,10 @@ export const insertService = () =>
         let imagesId = v4();
         let overviewId = v4();
         let desc = JSON.stringify(item?.mainContent?.content);
+        let currentArea = getNumberFromString(
+          item?.header?.attributes?.acreage
+        );
+        let currentPrice = getNumberFromString(item?.header?.attributes?.price);
 
         await db.Post.create({
           id: postId,
@@ -40,18 +48,19 @@ export const insertService = () =>
           userId,
           overviewId,
           imagesId,
-          // areaCode: dataArea.find(
-          //   (area) => area.max > currentArea && area.min <= currentArea
-          // )?.code,
-          // priceCode: dataPrice.find(
-          //   (area) => area.max > currentPrice && area.min <= currentPrice
-          // )?.code,
+          areaCode: dataArea.find(
+            (area) => area.max > currentArea && area.min <= currentArea
+          )?.code,
+          priceCode: dataPrice.find(
+            (area) => area.max > currentPrice && area.min <= currentPrice
+          )?.code,
           // provinceCode,
           // priceNumber: getNumberFromStringV2(item?.header?.attributes?.price),
           // areaNumber: getNumberFromStringV2(
           //   item?.header?.attributes?.acreage
           // ),
         });
+
         await db.Attribute.create({
           id: attributesId,
           price: item?.header?.attributes?.price,
@@ -63,9 +72,12 @@ export const insertService = () =>
           id: imagesId,
           image: JSON.stringify(item?.images),
         });
-        await db.Label.create({
-          code: labelCode,
-          value: item?.header?.class?.classType,
+        await db.Label.findOrCreate({
+          where: { code: labelCode },
+          defaults: {
+            code: labelCode,
+            value: item?.header?.class?.classType,
+          },
         });
         await db.Overview.create({
           id: overviewId,
@@ -110,25 +122,25 @@ export const insertService = () =>
       reject(error);
     }
   });
-// export const createPricesAndAreas = () =>
-//   new Promise((resolve, reject) => {
-//     try {
-//       dataPrice.forEach(async (item, index) => {
-//         await db.Price.create({
-//           code: item.code,
-//           value: item.value,
-//           order: index + 1,
-//         });
-//       });
-//       dataArea.forEach(async (item, index) => {
-//         await db.Area.create({
-//           code: item.code,
-//           value: item.value,
-//           order: index + 1,
-//         });
-//       });
-//       resolve("OK");
-//     } catch (err) {
-//       reject(err);
-//     }
-//   });
+export const createPricesAndAreas = () =>
+  new Promise((resolve, reject) => {
+    try {
+      dataPrice.forEach(async (item, index) => {
+        await db.Price.create({
+          code: item.code,
+          value: item.value,
+          order: index + 1,
+        });
+      });
+      dataArea.forEach(async (item, index) => {
+        await db.Area.create({
+          code: item.code,
+          value: item.value,
+          order: index + 1,
+        });
+      });
+      resolve("OK");
+    } catch (err) {
+      reject(err);
+    }
+  });
