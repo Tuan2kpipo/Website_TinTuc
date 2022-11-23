@@ -44,7 +44,7 @@ module.exports = (sequelize, DataTypes) => {
       priceCode: DataTypes.STRING,
       areaCode: DataTypes.STRING,
       // // dia ban
-      // provinceCode: DataTypes.STRING,
+      provinceCode: DataTypes.STRING,
       // priceNumber: DataTypes.FLOAT,
       // areaNumber: DataTypes.FLOAT,
     },

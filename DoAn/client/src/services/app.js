@@ -26,17 +26,18 @@ export const apiGetAreas = () =>
       reject(error);
     }
   });
-// export const apiGetProvinces = () => new Promise(async (resolve, reject) => {
-//     try {
-//         const response = await axios({
-//             method: 'get',
-//             url: '/api/v1/province/all'
-//         })
-//         resolve(response)
-//     } catch (error) {
-//         reject(error)
-//     }
-// })
+export const apiGetProvinces = () =>
+  new Promise(async (resolve, reject) => {
+    try {
+      const response = await axios({
+        method: "get",
+        url: "/api/v1/province/all",
+      });
+      resolve(response);
+    } catch (error) {
+      reject(error);
+    }
+  });
 // export const apiGetPublicProvinces = () => new Promise(async (resolve, reject) => {
 //     try {
 //         const response = await axiosDefault({

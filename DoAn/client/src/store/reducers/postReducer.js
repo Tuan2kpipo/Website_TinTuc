@@ -16,12 +16,12 @@ const postReducer = (state = initState, action) => {
         msg: action.msg || "",
         count: action.count || 0,
       };
-    // case actionTypes.GET_NEW_POST:
-    //     return {
-    //         ...state,
-    //         msg: action.msg || '',
-    //         newPosts: action.newPosts || []
-    //     }
+    case actionTypes.GET_NEW_POST:
+      return {
+        ...state,
+        msg: action.msg || "",
+        newPosts: action.newPosts || [],
+      };
     default:
       return state;
   }

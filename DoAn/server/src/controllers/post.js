@@ -27,16 +27,14 @@ export const getPostsLimit = async (req, res) => {
   }
 };
 
-// export const apiGetPostsLimit = (query) =>
-//   new Promise(async (resolve, reject) => {
-//     try {
-//       const response = await axiosConfig({
-//         method: "get",
-//         url: `/api/v1/post/limit`,
-//         params: query,
-//       });
-//       resolve(response);
-//     } catch (error) {
-//       reject(error);
-//     }
-//   });
+export const getNewPosts = async (req, res) => {
+  try {
+    const response = await postService.getNewPostService();
+    return res.status(200).json(response);
+  } catch (error) {
+    return res.status(500).json({
+      err: -1,
+      msg: "Failed at post controller: " + error,
+    });
+  }
+};

@@ -4,7 +4,7 @@ import { getPosts, getPostsLimit } from "../../store/actions/post";
 import { useDispatch, useSelector } from "react-redux";
 import { useSearchParams } from "react-router-dom";
 
-function List() {
+function List({ categoryCode }) {
   const dispatch = useDispatch();
   const [searchParams] = useSearchParams();
   const { posts } = useSelector((state) => state.post);
@@ -20,11 +20,13 @@ function List() {
       searchParamsObject = { ...searchParamsObject, [i[0]]: i[1] };
     });
 
+    if (categoryCode) searchParamsObject.categoryCode = categoryCode;
+
     // console.log(param);
 
     dispatch(getPostsLimit(searchParamsObject));
     // listRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
-  }, [searchParams]);
+  }, [searchParams, categoryCode]);
 
   return (
     <div className="w-full bg-white  p-2 shadow-md rounded-md px-6">

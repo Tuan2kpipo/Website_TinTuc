@@ -34,7 +34,7 @@ export const getPrices = () => async (dispatch) => {
         prices: response.data.response.sort((a, b) => {
           return +a.order - +b.order;
         }),
-        // msg: "",
+        msg: "",
       });
     } else {
       dispatch({
@@ -51,16 +51,17 @@ export const getPrices = () => async (dispatch) => {
     });
   }
 };
+
 export const getAreas = () => async (dispatch) => {
   try {
-    const response = await apis.apiGetAreas;
+    const response = await apis.apiGetAreas();
     if (response?.data.err === 0) {
       dispatch({
         type: actionTypes.GET_AREAS,
         areas: response.data.response.sort((a, b) => {
           return +a.order - +b.order;
         }),
-        // msg: "",
+        msg: "",
       });
     } else {
       dispatch({
@@ -73,31 +74,33 @@ export const getAreas = () => async (dispatch) => {
     dispatch({
       type: actionTypes.GET_AREAS,
       areas: null,
-      // msg: error,
+      msg: error,
     });
   }
 };
-// export const getProvinces = () => async (dispatch) => {
-//   try {
-//       const response = await apis.apiGetProvinces()
-//       if (response?.data.err === 0) {
-//           dispatch({
-//               type: actionTypes.GET_PROVINCES,
-//               provinces: response.data.response,
-//               msg: ''
-//           })
-//       } else {
-//           dispatch({
-//               type: actionTypes.GET_PROVINCES,
-//               msg: response.data.msg,
-//               provinces: null
-//           })
-//       }
-//   } catch (error) {
-//       dispatch({
-//           type: actionTypes.GET_PROVINCES,
-//           provinces: null,
-//           msg: ''
-//       })
-//   }
-// }
+
+// lay theo tinh
+export const getProvinces = () => async (dispatch) => {
+  try {
+    const response = await apis.apiGetProvinces();
+    if (response?.data.err === 0) {
+      dispatch({
+        type: actionTypes.GET_PROVINCES,
+        provinces: response.data.response,
+        msg: "",
+      });
+    } else {
+      dispatch({
+        type: actionTypes.GET_PROVINCES,
+        msg: response.data.msg,
+        provinces: null,
+      });
+    }
+  } catch (error) {
+    dispatch({
+      type: actionTypes.GET_PROVINCES,
+      provinces: null,
+      msg: "",
+    });
+  }
+};
