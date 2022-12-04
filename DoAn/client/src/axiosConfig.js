@@ -9,15 +9,17 @@ instance.interceptors.request.use(
   function (config) {
     // Do something before request is sent
     // gắn token vào header
-    // let token =
-    //   window.localStorage.getItem("persist:auth") &&
-    //   JSON.parse(window.localStorage.getItem("persist:auth"))?.token?.slice(
-    //     1,
-    //     -1
-    //   );
-    // config.headers = {
-    //   authorization: token ? `Bearer ${token}` : null,
-    // };
+    let token =
+      window.localStorage.getItem("persist:auth") &&
+      JSON.parse(window.localStorage.getItem("persist:auth"))?.token?.slice(
+        1,
+        -1
+      );
+
+    console.log(window.localStorage.getItem("persist:auth"));
+    config.headers = {
+      authorization: `Bearer ${token}`,
+    };
     return config;
   },
   function (error) {
